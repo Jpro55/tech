@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">قرين</string>
+    <string name="tile_label">قرين - Tile</string>
+    <string name="tts_test">مرحبا، أنا قرين، مساعدك الشخصي</string>
+    <string name="voice_prompt">قل أمرك يا سيدي</string>
+    <string name="sync_success">تمت المزامنة</string>
+    <string name="no_connection">الهاتف غير متصل</string>
+</resources>

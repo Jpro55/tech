@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">قرين</string>
+    <string name="sync_with_watch">مزامنة مع الساعة</string>
+    <string name="watch_connected">الساعة متصلة</string>
+    <string name="watch_disconnected">الساعة غير متصلة</string>
+</resources>
