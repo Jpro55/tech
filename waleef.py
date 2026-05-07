@@ -4,6 +4,7 @@ import time
 import json
 import wave
 import queue
+import audioop
 import tempfile
 import threading
 import winsound
@@ -41,6 +42,10 @@ OLLAMA_MODEL = "gemma4:e2b"
 MAX_RECORDING_SECONDS = 30
 SAMPLE_RATE = 16000
 
+# تكبير صوت الميكروفون (1.0 = طبيعي، 2.0 = ضعفين، 3.0 = ثلاثة أضعاف)
+# ارفعه لو وليف ما يسمعك جيدًا، أو نزّله لو يلتقط ضوضاء.
+MIC_GAIN = 2.5
+
 
 # ============== أصوات تفاعلية ==============
 def _safe_beep(freq, dur):
@@ -71,6 +76,22 @@ def split_into_sentences(text):
         return []
     parts = _SENTENCE_BOUNDARY.split(text)
     return [p.strip() for p in parts if p.strip()]
+
+
+def extract_chunk_content(chunk):
+    """استخراج المحتوى من chunk بغض النظر عن نسخة ollama-python.
+    النسخ الجديدة (>=0.4) ترجع Pydantic ChatResponse، القديمة dict."""
+    try:
+        if isinstance(chunk, dict):
+            msg = chunk.get('message') or {}
+            return msg.get('content', '') or ''
+        # Pydantic أو أي object فيه message.content
+        msg = getattr(chunk, 'message', None)
+        if msg is None:
+            return ''
+        return getattr(msg, 'content', '') or ''
+    except Exception:
+        return ''
 
 
 # ============== عيون النيون ==============
@@ -224,13 +245,31 @@ class WaleefApp(App):
             rec = KaldiRecognizer(self.vosk_model, SAMPLE_RATE)
 
             start_time = time.time()
+            last_partial = ""
             while self.is_listening:
                 if time.time() - start_time > MAX_RECORDING_SECONDS:
                     print(">>> انتهى الحد الأقصى للتسجيل (30 ثانية)", flush=True)
                     break
                 try:
-                    data = stream.read(4000, exception_on_overflow=False)
+                    data = stream.read(2000, exception_on_overflow=False)
+                    # تكبير الصوت لرفع حساسية الميكروفون
+                    if MIC_GAIN != 1.0:
+                        try:
+                            data = audioop.mul(data, 2, MIC_GAIN)
+                        except audioop.error:
+                            pass  # تجاوز قيم تسببت في clipping
                     rec.AcceptWaveform(data)
+
+                    # إظهار النص الجزئي حتى يتأكد المستخدم من السماع
+                    try:
+                        partial = json.loads(rec.PartialResult()).get("partial", "").strip()
+                        if partial and partial != last_partial:
+                            last_partial = partial
+                            Clock.schedule_once(
+                                lambda dt, t=partial: self._update_partial(t)
+                            )
+                    except Exception:
+                        pass
                 except Exception as e:
                     print(f"[خطأ قراءة] {e}", flush=True)
                     break
@@ -278,7 +317,7 @@ class WaleefApp(App):
                     stream=True,
                 )
                 for chunk in stream:
-                    piece = chunk.get('message', {}).get('content', '') if isinstance(chunk, dict) else ''
+                    piece = extract_chunk_content(chunk)
                     if not piece:
                         continue
                     full_answer += piece
@@ -301,7 +340,29 @@ class WaleefApp(App):
                 if tail:
                     self.tts_queue.put(tail)
 
-                Clock.schedule_once(lambda dt: self._on_response_done(full_answer))
+                # خطة بديلة: لو الـ stream ما رجّع شي، جرّب بدون streaming
+                if not full_answer.strip():
+                    print("[تحذير] streaming رجع فاضي، تجربة بدون streaming...", flush=True)
+                    try:
+                        resp = ollama.chat(
+                            model=OLLAMA_MODEL,
+                            messages=[{'role': 'user', 'content': prompt}],
+                        )
+                        if isinstance(resp, dict):
+                            full_answer = (resp.get('message') or {}).get('content', '') or ''
+                        else:
+                            msg = getattr(resp, 'message', None)
+                            full_answer = getattr(msg, 'content', '') or '' if msg else ''
+                        if full_answer.strip():
+                            for s in split_into_sentences(full_answer):
+                                self.tts_queue.put(s)
+                    except Exception as e2:
+                        print(f"[فشلت الخطة البديلة] {e2}", flush=True)
+
+                if full_answer.strip():
+                    Clock.schedule_once(lambda dt: self._on_response_done(full_answer))
+                else:
+                    Clock.schedule_once(lambda dt: self.reset_ui("ما وصلني رد من العقل.. جرّب مجدداً"))
             except Exception as e:
                 print(f"[خطأ Ollama] {e}", flush=True)
                 Clock.schedule_once(lambda dt: self.reset_ui("فشل الرد.. تأكد من تشغيل Ollama"))
@@ -312,6 +373,13 @@ class WaleefApp(App):
         # نعرض آخر 200 حرف فقط لمنع تجاوز حدود الـ Label
         display = text if len(text) <= 200 else "..." + text[-200:]
         self.status_label.text = fix_arabic(display)
+
+    def _update_partial(self, text):
+        """يعرض النص الجزئي أثناء التسجيل ليتأكد المستخدم من السماع."""
+        if not self.is_listening:
+            return
+        display = text if len(text) <= 80 else "..." + text[-80:]
+        self.status_label.text = fix_arabic("🎙️ " + display)
 
     def _on_response_done(self, answer):
         self.eyes.eye_color = [0, 0.8, 1, 1]
