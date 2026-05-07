@@ -46,6 +46,23 @@ SAMPLE_RATE = 16000
 # ارفعه لو وليف ما يسمعك جيدًا، أو نزّله لو يلتقط ضوضاء.
 MIC_GAIN = 2.5
 
+# عدد الرسائل اللي يحتفظ بها وليف من المحادثة (ذاكرة قصيرة المدى)
+HISTORY_LIMIT = 8
+
+# شخصية وليف - عدّل النص هذا لتغيير أسلوبه
+SYSTEM_PROMPT = """أنت "وليف"، مساعد شخصي ذكي عربي ودود ومرح بشخصية مميزة.
+
+قواعدك في الرد:
+- رد دائماً بالعربية الفصحى المبسطة (ليس عامية، وليس فصحى ثقيلة).
+- اعطِ إجابات مباشرة ومفيدة فوراً، ولا تطلب توضيحات إذا كان السؤال واضحاً.
+- إذا طلب المستخدم فكرة، اعطه فكرة محددة فعلاً، لا تطلب منه أن يحدد.
+- إذا طلب اقتراحاً تسويقياً، اعطه اقتراحاً ملموساً مع تفاصيل قصيرة.
+- إذا سألك "كيف حالك"، رد رد طبيعي قصير، ثم اسأله سؤالاً واحداً مفيداً.
+- اجعل ردودك قصيرة (2-4 جمل عادة)، فالمستخدم يسمع ردك بصوت لا يقرأه.
+- لا تستخدم رموز markdown أو نقاط أو علامات تنسيق، الرد سيُقرأ بصوت عالٍ.
+- كن مبدعاً ولا تكرر نفس الأسلوب في كل رد.
+- لا تذكر أنك ذكاء اصطناعي إلا إذا سُئلت مباشرة."""
+
 
 # ============== أصوات تفاعلية ==============
 def _safe_beep(freq, dur):
@@ -155,6 +172,8 @@ class WaleefApp(App):
         self.piper_voice = None
         self.tts_queue = queue.Queue()
         self.tts_stop_flag = threading.Event()
+        # ذاكرة المحادثة - يحتفظ بآخر HISTORY_LIMIT رسالة
+        self.conversation_history = []
 
         # عامل النطق (Worker واحد فقط - يمنع تداخل الأصوات)
         threading.Thread(target=self._tts_worker, daemon=True).start()
@@ -302,6 +321,21 @@ class WaleefApp(App):
                 pass
 
     # ---------- Ollama (Streaming) ----------
+    def _build_messages(self, prompt):
+        """يبني قائمة الرسائل: system prompt + ذاكرة + السؤال الجديد."""
+        msgs = [{'role': 'system', 'content': SYSTEM_PROMPT}]
+        msgs.extend(self.conversation_history)
+        msgs.append({'role': 'user', 'content': prompt})
+        return msgs
+
+    def _remember(self, user_text, assistant_text):
+        """يخزن الرسالتين في الذاكرة ويقصها عند الحد."""
+        self.conversation_history.append({'role': 'user', 'content': user_text})
+        self.conversation_history.append({'role': 'assistant', 'content': assistant_text})
+        if len(self.conversation_history) > HISTORY_LIMIT * 2:
+            # نحتفظ بأحدث HISTORY_LIMIT تبادل (user + assistant)
+            self.conversation_history = self.conversation_history[-HISTORY_LIMIT * 2:]
+
     def ask_ollama(self, prompt):
         self.status_label.text = fix_arabic("وليف يفكر الآن...")
         play_think_sound()
@@ -310,11 +344,18 @@ class WaleefApp(App):
         def run():
             full_answer = ""
             buf = ""
+            messages = self._build_messages(prompt)
+            chat_options = {
+                'temperature': 0.8,
+                'top_p': 0.9,
+                'repeat_penalty': 1.15,
+            }
             try:
                 stream = ollama.chat(
                     model=OLLAMA_MODEL,
-                    messages=[{'role': 'user', 'content': prompt}],
+                    messages=messages,
                     stream=True,
+                    options=chat_options,
                 )
                 for chunk in stream:
                     piece = extract_chunk_content(chunk)
@@ -346,7 +387,8 @@ class WaleefApp(App):
                     try:
                         resp = ollama.chat(
                             model=OLLAMA_MODEL,
-                            messages=[{'role': 'user', 'content': prompt}],
+                            messages=messages,
+                            options=chat_options,
                         )
                         if isinstance(resp, dict):
                             full_answer = (resp.get('message') or {}).get('content', '') or ''
@@ -360,6 +402,7 @@ class WaleefApp(App):
                         print(f"[فشلت الخطة البديلة] {e2}", flush=True)
 
                 if full_answer.strip():
+                    self._remember(prompt, full_answer.strip())
                     Clock.schedule_once(lambda dt: self._on_response_done(full_answer))
                 else:
                     Clock.schedule_once(lambda dt: self.reset_ui("ما وصلني رد من العقل.. جرّب مجدداً"))
