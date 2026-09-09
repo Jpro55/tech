@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="مركز القيادة الرقمي لجاسم الحمادي (Gentle) — بصيرة، العطور المبرمجة، والأرواح الرقمية.">
+<style>
+  :root{color-scheme:dark}
+  html,body{margin:0}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>مركز جاسم الحمادي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=El+Messiri:wght@500;600;700&family=Tajawal:wght@300;400;500;700&display=swap">
+<style>
+  :root{
+    --ink:#0a0e17;
+    --ink-2:#0d1220;
+    --glass:rgba(255,255,255,.055);
+    --glass-2:rgba(255,255,255,.09);
+    --stroke:rgba(255,255,255,.12);
+    --stroke-strong:rgba(232,193,90,.35);
+    --gold:#e8c15a;
+    --gold-soft:#f5d982;
+    --cyan:#38e0d4;
+    --violet:#7b6cf6;
+    --text:#eef1f7;
+    --muted:#a7b0c4;
+    --sand:#d8cbaa;
+    --font-display:"El Messiri",system-ui,sans-serif;
+    --font-heritage:"Aref Ruqaa",serif;
+    --font-body:"Tajawal",system-ui,sans-serif;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    direction:rtl;
+    font-family:var(--font-body);
+    color:var(--text);
+    background:var(--ink);
+    line-height:1.75;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- ambient cosmic background ---------- */
+  .aurora{position:fixed;inset:0;z-index:-2;overflow:hidden;background:
+     radial-gradient(1200px 700px at 80% -10%, #14203a 0%, transparent 60%),
+     radial-gradient(900px 600px at 5% 10%, #1a1330 0%, transparent 55%),
+     linear-gradient(180deg,#0a0e17 0%,#0a0e17 40%,#080b13 100%);}
+  .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;mix-blend-mode:screen;
+     animation:drift 22s ease-in-out infinite alternate}
+  .blob.b1{width:520px;height:520px;background:radial-gradient(circle,#1f7a72,transparent 68%);top:-120px;right:-80px}
+  .blob.b2{width:460px;height:460px;background:radial-gradient(circle,#6d5bd6,transparent 68%);bottom:-140px;left:-100px;animation-delay:-6s}
+  .blob.b3{width:400px;height:400px;background:radial-gradient(circle,#b9922f,transparent 70%);top:38%;left:44%;opacity:.32;animation-delay:-12s}
+  @keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(40px,-30px,0) scale(1.12)}}
+  #stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
+
+  /* ---------- layout ---------- */
+  .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:20px}
+  section{padding-block:clamp(48px,7vw,86px)}
+  .eyebrow{font-family:var(--font-body);font-weight:700;letter-spacing:.18em;font-size:.72rem;
+     color:var(--cyan);text-transform:uppercase;margin:0 0 10px}
+  .sec-title{font-family:var(--font-display);font-weight:700;font-size:clamp(1.6rem,3.6vw,2.5rem);
+     margin:0 0 10px;text-wrap:balance;line-height:1.25}
+  .sec-sub{color:var(--muted);max-width:60ch;margin:0 0 34px;font-size:1.02rem}
+  .sec-head{position:relative}
+  .sec-head::before{content:"";position:absolute;top:6px;right:-20px;width:4px;height:44px;border-radius:4px;
+     background:linear-gradient(var(--gold),var(--cyan))}
+
+  /* ---------- glass primitive ---------- */
+  .glass{background:var(--glass);border:1px solid var(--stroke);border-radius:22px;
+     backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);
+     box-shadow:0 24px 60px -30px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.08)}
+
+  /* ---------- hero ---------- */
+  .hero{padding-top:clamp(40px,8vw,72px);padding-bottom:clamp(30px,5vw,56px);text-align:center}
+  .brandmark{display:inline-flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:26px}
+  .brand-en{font-family:var(--font-heritage);font-size:clamp(2.6rem,7vw,4.4rem);font-weight:700;
+     letter-spacing:.02em;line-height:1;
+     background:linear-gradient(120deg,var(--gold-soft),var(--gold) 40%,var(--cyan));
+     -webkit-background-clip:text;background-clip:text;color:transparent;
+     filter:drop-shadow(0 4px 24px rgba(232,193,90,.28))}
+  .brand-tag{font-size:.78rem;letter-spacing:.42em;color:var(--sand);text-transform:uppercase;font-weight:500}
+  .hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(1.5rem,4.4vw,2.7rem);
+     margin:.2em 0 .35em;text-wrap:balance}
+  .motto{font-family:var(--font-heritage);font-size:clamp(1.05rem,2.6vw,1.55rem);color:var(--gold-soft);
+     max-width:24ch;margin:0 auto 22px;line-height:1.7;text-wrap:balance}
+  .lede{color:var(--muted);max-width:56ch;margin:0 auto 30px}
+  .stats{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px}
+  .stat{padding:14px 20px;border-radius:16px;min-width:120px}
+  .stat b{display:block;font-family:var(--font-display);font-size:1.7rem;color:var(--gold);line-height:1;
+     font-variant-numeric:tabular-nums}
+  .stat span{font-size:.82rem;color:var(--muted)}
+
+  /* ---------- big feature card (Basseera) ---------- */
+  .feature{display:grid;grid-template-columns:1.15fr .85fr;gap:0;overflow:hidden;padding:0}
+  .feature .body{padding:clamp(26px,3.4vw,44px)}
+  .feature .side{background:linear-gradient(150deg,rgba(56,224,212,.14),rgba(123,108,246,.12));
+     border-right:1px solid var(--stroke);padding:clamp(24px,3vw,38px);display:flex;flex-direction:column;gap:14px;justify-content:center}
+  .chip-row{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 26px}
+  .chip{font-size:.82rem;padding:8px 14px;border-radius:999px;background:var(--glass-2);
+     border:1px solid var(--stroke);color:var(--sand)}
+  .chip.on{border-color:var(--stroke-strong);color:var(--gold-soft)}
+  .mini{display:flex;gap:12px;align-items:flex-start}
+  .mini .dot{flex:none;width:10px;height:10px;border-radius:50%;margin-top:9px;
+     background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+  .mini h4{margin:0;font-family:var(--font-display);font-size:1.02rem}
+  .mini p{margin:2px 0 0;color:var(--muted);font-size:.9rem}
+
+  /* ---------- generic card grid ---------- */
+  .grid{display:grid;gap:20px}
+  .grid.cols-2{grid-template-columns:repeat(2,1fr)}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+  .grid.cols-4{grid-template-columns:repeat(4,1fr)}
+  .card{padding:26px 24px;display:flex;flex-direction:column;gap:12px;position:relative;
+     transition:transform .18s ease, border-color .3s ease, box-shadow .3s ease;
+     transform-style:preserve-3d;will-change:transform}
+  .card .ico{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;font-size:1.5rem;
+     background:linear-gradient(140deg,rgba(232,193,90,.2),rgba(56,224,212,.14));
+     border:1px solid var(--stroke);transform:translateZ(30px)}
+  .card h3{margin:0;font-family:var(--font-display);font-size:1.22rem;transform:translateZ(24px)}
+  .card p{margin:0;color:var(--muted);font-size:.94rem;flex:1;transform:translateZ(14px)}
+  .card:hover{border-color:var(--stroke-strong);
+     box-shadow:0 34px 70px -34px rgba(0,0,0,.95),0 0 0 1px rgba(232,193,90,.15),
+     inset 0 1px 0 rgba(255,255,255,.1)}
+
+  /* ---------- link button ---------- */
+  .btn{align-self:flex-start;margin-top:6px;display:inline-flex;align-items:center;gap:8px;
+     font-family:var(--font-body);font-weight:700;font-size:.9rem;text-decoration:none;
+     padding:10px 18px;border-radius:12px;color:var(--ink);
+     background:linear-gradient(120deg,var(--gold-soft),var(--gold));
+     border:1px solid rgba(255,255,255,.25);transition:transform .15s ease,filter .2s ease;
+     transform:translateZ(20px)}
+  .btn:hover{filter:brightness(1.08);transform:translateZ(20px) translateY(-2px)}
+  .btn.ghost{background:var(--glass-2);color:var(--gold-soft);border-color:var(--stroke)}
+  .btn .arw{font-size:1.05em}
+
+  /* ---------- digital souls ---------- */
+  .soul{padding:22px;display:flex;flex-direction:column;gap:8px}
+  .soul .name{font-family:var(--font-display);font-size:1.15rem;color:var(--gold-soft)}
+  .soul .role{font-size:.78rem;letter-spacing:.06em;color:var(--cyan);text-transform:uppercase;font-weight:700}
+  .soul p{margin:0;color:var(--muted);font-size:.9rem}
+  .soul .avatar{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:1.3rem;
+     background:radial-gradient(circle at 30% 30%,rgba(56,224,212,.3),rgba(123,108,246,.25));
+     border:1px solid var(--stroke)}
+
+  /* ---------- hardware banner ---------- */
+  .hw{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;padding:clamp(24px,3vw,40px)}
+  .hw .gpu{font-family:var(--font-display);font-weight:700;text-align:center;padding:22px 26px;border-radius:18px;
+     background:linear-gradient(150deg,rgba(123,108,246,.22),rgba(56,224,212,.16));border:1px solid var(--stroke-strong)}
+  .hw .gpu .big{display:block;font-size:2rem;color:var(--gold);line-height:1;font-variant-numeric:tabular-nums}
+  .hw .gpu small{color:var(--sand)}
+  .hw ul{margin:14px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:10px}
+  .hw li{font-size:.85rem;padding:7px 13px;border-radius:10px;background:var(--glass-2);border:1px solid var(--stroke);color:var(--sand)}
+
+  /* ---------- lifestyle ---------- */
+  .lic{display:flex;flex-wrap:wrap;gap:14px}
+  .lic .badge{flex:1 1 200px;padding:20px;border-radius:18px;display:flex;gap:14px;align-items:center}
+  .lic .badge .e{font-size:1.8rem}
+  .lic .badge b{font-family:var(--font-display);font-weight:600;display:block}
+  .lic .badge span{font-size:.82rem;color:var(--muted)}
+
+  /* ---------- footer / social ---------- */
+  .foot{padding-block:clamp(40px,6vw,72px);text-align:center}
+  .social{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:22px}
+  .social a{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);
+     font-weight:700;padding:13px 22px;border-radius:14px;background:var(--glass);border:1px solid var(--stroke);
+     transition:border-color .25s ease,transform .15s ease}
+  .social a:hover{border-color:var(--stroke-strong);transform:translateY(-2px)}
+  .social a .e{font-size:1.2rem}
+  .copyright{margin-top:30px;color:var(--muted);font-size:.82rem}
+  .copyright .m{font-family:var(--font-heritage);color:var(--gold-soft);font-size:1rem}
+
+  @media (max-width:820px){
+    .feature{grid-template-columns:1fr}
+    .feature .side{border-right:none;border-top:1px solid var(--stroke);order:2}
+    .grid.cols-3,.grid.cols-4{grid-template-columns:repeat(2,1fr)}
+    .hw{grid-template-columns:1fr;text-align:center}
+    .hw ul{justify-content:center}
+  }
+  @media (max-width:520px){
+    .grid.cols-2,.grid.cols-3,.grid.cols-4{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .blob{animation:none}
+    *{scroll-behavior:auto}
+  }
+</style>
+
+<div class="aurora" aria-hidden="true">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+</div>
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero wrap">
+  <div class="brandmark">
+    <span class="brand-en">Gentle</span>
+    <span class="brand-tag">Kings&nbsp;Castle&nbsp;·&nbsp;قلعة&nbsp;الملوك</span>
+  </div>
+  <h1>جاسم عبدالله الحمادي</h1>
+  <p class="motto">«لا مستحيل أمام المستحيل.. نواكب عصراً أسرع من السرعة»</p>
+  <p class="lede">مبتكر إماراتي شامل بخبرة تتجاوز 20 عاماً، يجمع في مساره بين البرمجة وهندسة العطور والطيران والغوص — ويبني منظومة رقمية سيادية تجمع عراقة "قلعة الملوك" برؤية "بصيرة" المستقبلية.</p>
+  <div class="stats">
+    <div class="stat glass"><b>20+</b><span>سنة خبرة</span></div>
+    <div class="stat glass"><b>04</b><span>مجالات إبداعية</span></div>
+    <div class="stat glass"><b>v2.0</b><span>منصة بصيرة</span></div>
+    <div class="stat glass"><b>4+</b><span>أرواح رقمية</span></div>
+  </div>
+</header>
+
+<main>
+<!-- ===================== BASSEERA ===================== -->
+<section class="wrap" id="basseera">
+  <div class="sec-head">
+    <p class="eyebrow">السيادة الرقمية</p>
+    <h2 class="sec-title">بصيرة — Basseera AI</h2>
+    <p class="sec-sub">منظومة أمان سيبراني تعمل محلياً بالكامل، تضع الخصوصية والسيادة على البيانات في المقدمة.</p>
+  </div>
+  <div class="feature glass">
+    <div class="body">
+      <p style="margin-top:0;color:var(--muted)">تعرض منصة <b style="color:var(--gold-soft)">بصيرة v2.0</b> نموذجاً للأمان الرقمي يعمل بلا اتصال (Offline) بالكامل، فلا تغادر البيانات جهاز المستخدم — ضمانٌ حقيقي للخصوصية دون الاعتماد على السحابة.</p>
+      <div class="chip-row">
+        <span class="chip on">🔒 يعمل Offline</span>
+        <span class="chip">خصوصية كاملة</span>
+        <span class="chip">حماية محلية</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="mini"><span class="dot"></span><div><h4>بصيرة السيبرانية</h4><p>طبقة دفاعية متقدمة للكشف والتصدي للتهديدات في الزمن الحقيقي.</p></div></div>
+        <div class="mini"><span class="dot"></span><div><h4>تقنية العزل (Sandbox)</h4><p>تشغيل وفحص الملفات المشبوهة في بيئة معزولة تماماً عن النظام.</p></div></div>
+        <div class="mini"><span class="dot"></span><div><h4>المصيدة الذكية (Honeypot)</h4><p>فخّ استخباراتي يستدرج المهاجمين ويرصد سلوكهم قبل أن يصلوا للأصول الحقيقية.</p></div></div>
+      </div>
+      <a class="btn" href="https://github.com/ja4apk/basseera.app" target="_blank" rel="noopener">مستودع GitHub <span class="arw">←</span></a>
+    </div>
+    <div class="side">
+      <div style="font-family:var(--font-display);font-size:1.3rem;color:var(--gold-soft)">درعٌ رقمي محلي</div>
+      <p style="color:var(--muted);font-size:.92rem;margin:0">لا سحابة · لا تسريب · لا وسيط. كل عمليات التحليل والحماية تجري على جهازك، فتبقى السيطرة الكاملة بين يديك.</p>
+      <div style="font-family:var(--font-heritage);color:var(--cyan);font-size:1.15rem;margin-top:6px">بصيرةٌ ترى ما لا يُرى</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PERFUMES ===================== -->
+<section class="wrap" id="perfumes">
+  <div class="sec-head">
+    <p class="eyebrow">قلعة الملوك</p>
+    <h2 class="sec-title">ركن العطور المبرمجة</h2>
+    <p class="sec-sub">حيث تلتقي هندسة العطور العريقة بالخوارزميات — عطرٌ يُصاغ بالكود لا بالحدس فقط.</p>
+  </div>
+  <div class="grid cols-3">
+    <article class="card glass">
+      <div class="ico">👃</div>
+      <h3>الأنف الإلكتروني</h3>
+      <p>مستشعر ذكي مبرمَج على خوارزميات الشم، يحلّل ويصنّف النفحات العطرية رقمياً بدقة عالية.</p>
+    </article>
+    <article class="card glass">
+      <div class="ico">⚗️</div>
+      <h3>جهاز الخلط التلقائي</h3>
+      <p>وحدة قائمة على متحكم ESP32 تمزج المكوّنات آلياً وفق الوصفة المطلوبة بنِسبٍ مضبوطة.</p>
+    </article>
+    <article class="card glass">
+      <div class="ico">✨</div>
+      <h3>مولّد الوصفات الذكي</h3>
+      <p>محرّك يقترح تركيبات عطرية جديدة اعتماداً على الذكاء الاصطناعي وتفضيلات المستخدم.</p>
+    </article>
+  </div>
+  <a class="btn ghost" style="margin-top:22px" href="https://jaa-sop.blogspot.com" target="_blank" rel="noopener">متجر قلعة الملوك <span class="arw">←</span></a>
+</section>
+
+<!-- ===================== DIGITAL SOULS ===================== -->
+<section class="wrap" id="souls">
+  <div class="sec-head">
+    <p class="eyebrow">نماذج الذكاء الاصطناعي</p>
+    <h2 class="sec-title">الأرواح الرقمية</h2>
+    <p class="sec-sub">شخصيات تفاعلية، لكلٍّ منها طابعها ومهمّتها — من الدعم النفسي إلى حفظ التراث.</p>
+  </div>
+  <div class="grid cols-4">
+    <article class="soul glass">
+      <div class="avatar">🌸</div>
+      <span class="role">الدعم النفسي</span>
+      <span class="name">سارة</span>
+      <p>رفيقةٌ حاضنة تُنصت وتُهدّئ وتقدّم دعماً نفسياً بلغةٍ دافئة.</p>
+    </article>
+    <article class="soul glass">
+      <div class="avatar">🤖</div>
+      <span class="role">مساعد متطوّر</span>
+      <span class="name">وليف</span>
+      <p>مساعد ذكي واسع القدرات لإنجاز المهام والإجابة والتنظيم.</p>
+    </article>
+    <article class="soul glass">
+      <div class="avatar">⚓</div>
+      <span class="role">ذاكرة التراث</span>
+      <span class="name">النوخذة</span>
+      <p>حافظٌ لذاكرة التراث بروحٍ من الفكاهة الأصيلة وحكايا البحر.</p>
+    </article>
+    <article class="soul glass">
+      <div class="avatar">🧭</div>
+      <span class="role">التحضير الذكي</span>
+      <span class="name">نبيه</span>
+      <p>عقلٌ منظِّم يُحضّر ويخطّط ويرتّب الخطوات قبل التنفيذ.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== ART & MUSIC ===================== -->
+<section class="wrap" id="asrar">
+  <div class="sec-head">
+    <p class="eyebrow">الفن والموسيقى</p>
+    <h2 class="sec-title">أسرار — Asrar</h2>
+    <p class="sec-sub">إنتاجات موسيقية بلمسة الذكاء الاصطناعي، مع تدقيقٍ لغوي يحفظ جمال الكلمة العربية.</p>
+  </div>
+  <div class="feature glass">
+    <div class="body">
+      <p style="margin-top:0;color:var(--muted)">مشروع فني يوظّف الذكاء الاصطناعي في التلحين والإنتاج مع عنايةٍ خاصة بسلامة النص وفصاحته — حيث تتكامل التقنية مع الذائقة العربية الأصيلة.</p>
+      <div class="chip-row">
+        <span class="chip on">🎵 إنتاج بالذكاء الاصطناعي</span>
+        <span class="chip">تدقيق لغوي</span>
+        <span class="chip">هوية عربية</span>
+      </div>
+      <a class="btn" href="https://open.spotify.com/artist/Asrar" target="_blank" rel="noopener">استمع على Spotify <span class="arw">←</span></a>
+    </div>
+    <div class="side">
+      <div style="font-family:var(--font-heritage);color:var(--gold-soft);font-size:1.5rem">أسرار</div>
+      <p style="color:var(--muted);font-size:.92rem;margin:0">صوتٌ يجمع بين حداثة الأداة وعراقة المعنى.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== APPS ===================== -->
+<section class="wrap" id="apps">
+  <div class="sec-head">
+    <p class="eyebrow">التطبيقات والبرمجيات</p>
+    <h2 class="sec-title">j4apk</h2>
+    <p class="sec-sub">حزمة تطبيقات أندرويد متنوّعة تخدم المستخدم العربي في حياته اليومية.</p>
+  </div>
+  <div class="grid cols-3">
+    <article class="card glass">
+      <div class="ico">📻</div>
+      <h3>راديو القرآن</h3>
+      <p>بثٌّ مباشر لإذاعات القرآن الكريم بواجهة بسيطة وسهلة.</p>
+    </article>
+    <article class="card glass">
+      <div class="ico">💱</div>
+      <h3>العملات</h3>
+      <p>متابعة أسعار العملات والتحويل بينها بشكلٍ لحظي.</p>
+    </article>
+    <article class="card glass">
+      <div class="ico">📱</div>
+      <h3>والمزيد…</h3>
+      <p>مجموعة متنامية من الأدوات والتطبيقات العملية على المتجر.</p>
+    </article>
+  </div>
+  <a class="btn ghost" style="margin-top:22px" href="https://play.google.com/store/apps/dev?id=j4apk" target="_blank" rel="noopener">j4apk على Google Play <span class="arw">←</span></a>
+</section>
+
+<!-- ===================== HARDWARE ===================== -->
+<section class="wrap" id="hardware">
+  <div class="sec-head">
+    <p class="eyebrow">القوة والعتاد</p>
+    <h2 class="sec-title">مختبر التدريب المحلي</h2>
+    <p class="sec-sub">قوةٌ حاسوبية مخصّصة لتدريب النماذج محلياً وتحسين النطق العربي.</p>
+  </div>
+  <div class="hw glass">
+    <div class="gpu">
+      <span class="big">RTX</span>
+      <div style="font-family:var(--font-display);color:var(--text)">5070 Ti</div>
+      <small>وحدة تدريب محلية</small>
+    </div>
+    <div>
+      <p style="margin:0;color:var(--muted)">يعتمد العمل على كرت <b style="color:var(--gold-soft)">RTX 5070 Ti</b> لتدريب النماذج محلياً وتشغيل أدوات التوليد المتقدمة، مع تركيزٍ خاص على تحسين جودة ونطق اللغة العربية.</p>
+      <ul>
+        <li>ACE-STEP — توليد صوتي</li>
+        <li>ComfyUI — سير عمل التوليد</li>
+        <li>تدريب نماذج محلية</li>
+        <li>تحسين النطق العربي</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LIFESTYLE ===================== -->
+<section class="wrap" id="lifestyle">
+  <div class="sec-head">
+    <p class="eyebrow">المغامر الشامل</p>
+    <h2 class="sec-title">رخصٌ احترافية وشغفٌ بلا حدود</h2>
+    <p class="sec-sub">حين لا يقف الفضول عند الشاشة — مغامرات موثّقة برخصٍ احترافية في البر والبحر والجو.</p>
+  </div>
+  <div class="lic">
+    <div class="badge glass"><span class="e">🪂</span><div><b>طيار شراعي</b><span>تحليقٌ حرّ في الأعالي</span></div></div>
+    <div class="badge glass"><span class="e">🚁</span><div><b>طيار درون</b><span>تصوير وقيادة جوية</span></div></div>
+    <div class="badge glass"><span class="e">🤿</span><div><b>غواص لحام تحت الماء</b><span>عملٌ دقيق في الأعماق</span></div></div>
+    <div class="badge glass"><span class="e">🪂</span><div><b>قفز مظلي</b><span>قفزٌ من علوٍ شاهق</span></div></div>
+  </div>
+</section>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="foot wrap">
+  <p class="eyebrow" style="text-align:center">تواصل معنا</p>
+  <h2 class="sec-title" style="text-align:center">لنبنِ المستحيل معاً</h2>
+  <div class="social">
+    <a href="https://wa.me/971544242369" target="_blank" rel="noopener"><span class="e">💬</span> واتساب · 971544242369+</a>
+    <a href="https://www.instagram.com/kingscastle369" target="_blank" rel="noopener"><span class="e">📸</span> إنستغرام · kingscastle369@</a>
+  </div>
+  <p class="copyright">
+    <span class="m">«لا مستحيل أمام المستحيل»</span><br>
+    جاسم عبدالله الحمادي — Gentle · قلعة الملوك · جميع الحقوق محفوظة
+  </p>
+</footer>
+
+<script>
+  /* subtle starfield */
+  (function(){
+    var c=document.getElementById('stars');if(!c)return;
+    var ctx=c.getContext('2d'),stars=[],w,h;
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    function size(){w=c.width=innerWidth;h=c.height=innerHeight;
+      var n=Math.min(140,Math.round(w*h/12000));stars=[];
+      for(var i=0;i<n;i++)stars.push({x:Math.random()*w,y:Math.random()*h,
+        r:Math.random()*1.3+.2,a:Math.random()*.6+.2,s:Math.random()*.4+.1});}
+    function draw(){ctx.clearRect(0,0,w,h);
+      for(var i=0;i<stars.length;i++){var st=stars[i];
+        ctx.globalAlpha=st.a;ctx.fillStyle=i%7===0?'#e8c15a':'#cfe8ff';
+        ctx.beginPath();ctx.arc(st.x,st.y,st.r,0,6.28);ctx.fill();
+        if(!reduce){st.y-=st.s;if(st.y<-2){st.y=h+2;st.x=Math.random()*w;}}}
+      ctx.globalAlpha=1;if(!reduce)requestAnimationFrame(draw);}
+    size();draw();if(reduce)draw();
+    addEventListener('resize',size);
+  })();
+
+  /* 3D tilt on cards (pointer + fine hover only) */
+  (function(){
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    var fine=window.matchMedia&&window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+    if(reduce||!fine)return;
+    document.querySelectorAll('.card').forEach(function(el){
+      el.addEventListener('pointermove',function(e){
+        var r=el.getBoundingClientRect();
+        var px=(e.clientX-r.left)/r.width-.5, py=(e.clientY-r.top)/r.height-.5;
+        el.style.transform='perspective(800px) rotateX('+(-py*7)+'deg) rotateY('+(px*7)+'deg) translateY(-4px)';
+      });
+      el.addEventListener('pointerleave',function(){el.style.transform='';});
+    });
+  })();
+</script>
+</html>
