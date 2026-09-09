@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="مركز القيادة الرقمي لجاسم الحمادي (Gentle) — بصيرة، العطور المبرمجة، والأرواح الرقمية، مع مساعد ذكي.">
+<meta name="description" content="مركز القيادة الرقمي لجاسم الحمادي (Gentle) — بصيرة، الفرصة الاستثمارية، والأرواح الرقمية، مع مساعد ذكي.">
 <style>
   :root{color-scheme:dark}
   html,body{margin:0}
@@ -192,6 +192,34 @@
     .fab{animation:none}
   }
 
+  /* ---------- investment section ---------- */
+  .invest-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:26px}
+  .istat{padding:22px 18px;border-radius:18px;text-align:center}
+  .istat b{display:block;font-family:var(--font-display);font-size:1.75rem;color:var(--gold);line-height:1.1;font-variant-numeric:tabular-nums}
+  .istat b small{font-size:.62em;color:var(--gold-soft)}
+  .istat span{display:block;font-size:.82rem;color:var(--muted);margin-top:8px}
+  .tbl-wrap{overflow-x:auto;border-radius:18px;margin-bottom:16px;border:1px solid var(--stroke)}
+  table.proj{width:100%;border-collapse:collapse;min-width:540px;font-size:.92rem}
+  table.proj th,table.proj td{padding:13px 16px;text-align:right;border-bottom:1px solid var(--stroke)}
+  table.proj thead th{font-family:var(--font-display);color:var(--gold-soft);font-weight:600;
+     background:rgba(232,193,90,.08);font-size:.9rem;white-space:nowrap}
+  table.proj td{color:var(--sand);font-variant-numeric:tabular-nums}
+  table.proj tr.total td{background:rgba(56,224,212,.09);font-weight:700;color:var(--text);border-bottom:none}
+  .pl-pos{color:#66d6a4;font-weight:700}
+  .pl-neg{color:#f0876c;font-weight:700}
+  .fine{font-size:.78rem;color:var(--muted);margin:0 0 26px}
+  .streams{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:26px}
+  .stream{padding:20px;border-radius:16px}
+  .stream .e{font-size:1.5rem}
+  .stream h4{margin:8px 0 4px;font-family:var(--font-display);font-size:1.05rem}
+  .stream p{margin:0;color:var(--muted);font-size:.88rem}
+  .stream .amt{color:var(--gold-soft);font-weight:700;font-variant-numeric:tabular-nums}
+  .quote{padding:24px 26px;border-radius:18px;border-right:4px solid var(--gold);
+     background:linear-gradient(120deg,rgba(232,193,90,.13),rgba(56,224,212,.08));
+     font-family:var(--font-heritage);font-size:1.18rem;color:var(--gold-soft);line-height:1.85;text-wrap:balance;margin-bottom:22px}
+  @media (max-width:820px){.invest-grid{grid-template-columns:repeat(2,1fr)}.streams{grid-template-columns:1fr}}
+  @media (max-width:520px){.invest-grid{grid-template-columns:1fr}}
+
   /* ---------- AI assistant widget ---------- */
   .fab{position:fixed;bottom:22px;left:22px;z-index:60;display:flex;align-items:center;gap:10px;
      border:none;cursor:pointer;padding:12px 18px 12px 14px;border-radius:999px;font-family:var(--font-body);
@@ -293,6 +321,60 @@
       <div style="font-family:var(--font-heritage);color:var(--cyan);font-size:1.15rem;margin-top:6px">بصيرةٌ ترى ما لا يُرى</div>
     </div>
   </div>
+</section>
+
+<!-- ===================== INVESTMENT ===================== -->
+<section class="wrap" id="invest">
+  <div class="sec-head">
+    <p class="eyebrow">الفرصة الاستثمارية · بصيرة</p>
+    <h2 class="sec-title">شريكك في النجاح المالي والسيادة الرقمية</h2>
+    <p class="sec-sub">ليست بصيرة مجرد حارس أمن — إنها فرصة استثمار في السيادة الرقمية بعائدٍ قوي ونموذج عملٍ مستدام. الأرقام أدناه من دراسة الجدوى الرسمية للمشروع.</p>
+  </div>
+
+  <div class="invest-grid">
+    <div class="istat glass"><b>149<small>%</small></b><span>العائد على الاستثمار (ROI) في السنة الأولى</span></div>
+    <div class="istat glass"><b>746<small>K درهم</small></b><span>صافي ربح السنة الأولى</span></div>
+    <div class="istat glass"><b>750 → 2,000</b><span>تكلفة الوحدة مقابل سعر بيعها (درهم)</span></div>
+    <div class="istat glass"><b>+500<small>K</small></b><span>منشأة مستهدفة في الإمارات وحدها</span></div>
+  </div>
+
+  <div class="tbl-wrap glass">
+    <table class="proj">
+      <thead>
+        <tr><th>الفترة الزمنية</th><th>الوحدات المباعة</th><th>إجمالي الإيرادات (درهم)</th><th>صافي الربح / الخسارة (درهم)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>الربع الأول — تجريبي</td><td>50</td><td>100,000</td><td class="pl-neg">−63,500 (خسارة تأسيس)</td></tr>
+        <tr><td>الربع الثاني — النمو</td><td>150</td><td>300,000</td><td class="pl-pos">+61,500</td></tr>
+        <tr><td>الربع الثالث — التوسّع</td><td>300</td><td>600,000</td><td class="pl-pos">+249,000</td></tr>
+        <tr><td>الربع الرابع — الاستقرار</td><td>500</td><td>1,000,000</td><td class="pl-pos">+499,000</td></tr>
+        <tr class="total"><td>إجمالي السنة الأولى</td><td>1,000</td><td>2,000,000</td><td class="pl-pos">+746,000</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="fine">* توقعات السنة الأولى وفق دراسة الجدوى، من المرحلة التجريبية إلى الانطلاق الرسمي. التفاصيل الكاملة (الحصص، التقييم، الجداول) تُناقَش مباشرةً.</p>
+
+  <div class="streams">
+    <article class="stream glass">
+      <div class="e">🛡️</div>
+      <h4>المبيعات المباشرة (B2C / B2B)</h4>
+      <p><span class="amt">1,500 – 3,000 درهم</span> للوحدة الواحدة، بهامش ربحٍ ممتاز.</p>
+    </article>
+    <article class="stream glass">
+      <div class="e">🔧</div>
+      <h4>خدمات القيمة المضافة</h4>
+      <p>التثبيت (<span class="amt">500 – 1,000 درهم</span>) والصيانة السنوية.</p>
+    </article>
+    <article class="stream glass">
+      <div class="e">☁️</div>
+      <h4>اشتراكات اختيارية (SaaS)</h4>
+      <p>تخزين سحابي ودعم مميّز — <span class="amt">اختياري</span> لمن يرغب، بلا إلزام.</p>
+    </article>
+  </div>
+
+  <blockquote class="quote glass">«بصيرة ليست مجرد حارس أمن، بل شريكك في النجاح المالي والسيادة الرقمية. العائد المتوقّع 149%، والمستقبل أسرع من السرعة.»</blockquote>
+
+  <a class="btn" href="https://wa.me/971544242369" target="_blank" rel="noopener">تواصل للاستثمار والشراكة <span class="arw">←</span></a>
 </section>
 
 <!-- ===================== PERFUMES ===================== -->
@@ -559,7 +641,14 @@
       "7) المغامر الشامل: رخص طيار شراعي، طيار درون، غواص لحام تحت الماء، قفز مظلي.",
       "",
       "لماذا الاستثمار في بصيرة: الطلب على الخصوصية والأمن السيبراني في تصاعد، وميزة بصيرة إنها تعمل بلا سحابة (خصوصية مطلقة وسيادة كاملة على البيانات) — وهذا مطلب حسّاس للأفراد والجهات الحكومية والشركات في المنطقة. المنظومة متنوّعة (أمن + عطور تقنية + نماذج عربية + تطبيقات) مع مختبر تدريب محلي جاهز، وقائد بخبرة 20 سنة متعددة المجالات.",
-      "العائد المتوقّع: حسب دراسة الجدوى الخاصة بالمشروع، العائد المتوقّع يصل إلى 145% على مدى خمس سنوات. اذكر هذا الرقم دائماً منسوباً إلى «دراسة الجدوى»، ولا تخترع أرقاماً أخرى (حصص، تقييم، جداول) — إن طُلبت، وجّه للتواصل المباشر مع جاسم.",
+      "الأرقام المالية (من دراسة الجدوى — انسبها دائماً إليها، ولا تخترع غيرها):",
+      "- العائد على الاستثمار (ROI): يتوقّع أن يصل إلى 149% في السنة الأولى.",
+      "- توقعات السنة الأولى: الربع الأول (تجريبي) 50 وحدة بإيراد 100,000 درهم وخسارة تأسيس 63,500 درهم؛ الربع الثاني 150 وحدة بإيراد 300,000 وربح 61,500؛ الربع الثالث 300 وحدة بإيراد 600,000 وربح 249,000؛ الربع الرابع 500 وحدة بإيراد 1,000,000 وربح 499,000. الإجمالي: 1,000 وحدة، إيرادات 2,000,000 درهم، صافي ربح +746,000 درهم.",
+      "- اقتصاديات الوحدة: تكلفة التصنيع والتشغيل ~750 درهم، وتُباع بمتوسط 2,000 درهم (هامش ممتاز).",
+      "- مصادر الدخل: مبيعات مباشرة B2C/B2B (1,500–3,000 درهم للوحدة)، خدمات قيمة مضافة (تثبيت 500–1,000 درهم وصيانة سنوية)، واشتراكات SaaS اختيارية (تخزين سحابي ودعم مميّز، بلا إلزام).",
+      "- السوق المستهدف: أكثر من 500,000 منشأة في الإمارات تبحث عن حلول أمنية محلية وخصوصية مطلقة.",
+      "- الاستدامة: لا اشتراكات إجبارية، مما يجعله الخيار الأول للمنازل والشركات الصغيرة الهاربة من التكاليف الشهرية.",
+      "- أي تفاصيل أدق (حصص، تقييم، جداول موسّعة) لا تخترعها؛ وجّه للتواصل المباشر مع جاسم.",
       "التواصل: واتساب +971544242369 · إنستغرام kingscastle369@"
     ].join("\n");
 
@@ -570,7 +659,7 @@
     var C="\n\n📞 للتفاصيل تواصل مع جاسم مباشرة: واتساب +971544242369 · إنستغرام kingscastle369@";
     var INTENTS=[
       {k:["استثمار","مستثمر","شراكه","شريك","ممول","تمويل","نستثمر","اشارك","نكبر","فرصه","حصه","راس مال","ادخل معكم","ادخل وياكم","invest"],
-       a:"يا هلا فيك ومرحباً بك شريكاً 🤝 فرصة بصيرة قوية: الطلب على الأمن السيبراني والخصوصية في تصاعد، وميزتنا إننا نشتغل محلياً بالكامل (Offline) — يعني خصوصية مطلقة وسيادة كاملة على البيانات، وهذا مطلب حسّاس للأفراد والجهات الحكومية والشركات بالمنطقة.\n💰 وحسب دراسة الجدوى، العائد المتوقّع من المشروع يصل إلى 145% على مدى 5 سنوات.\nوما نكتفي ببصيرة: عندنا منظومة كاملة (عطور مبرمجة، نماذج ذكاء عربية، تطبيقات، ومختبر تدريب محلي جاهز)، بقيادة مبتكر خبرته +20 سنة بأربع مجالات.\nتفاصيل الأرقام والحصص نناقشها وياك مباشرة، وأبشر بالترحاب."+C},
+       a:"يا هلا فيك ومرحباً بك شريكاً 🤝 فرصة بصيرة قوية ومدعومة بدراسة جدوى:\n💰 العائد على الاستثمار (ROI) يتوقّع يوصل 149% في السنة الأولى، بصافي ربح +746,000 درهم.\n📈 خطة السنة الأولى: 1,000 وحدة بإيرادات 2,000,000 درهم (من ربع تجريبي إلى انطلاق رسمي).\n🏭 هامش ممتاز: تكلفة الوحدة ~750 درهم وتُباع بمتوسط 2,000 درهم.\n🎯 السوق المستهدف: +500,000 منشأة في الإمارات تبي حلول أمنية محلية وخصوصية مطلقة.\nوميزتنا إننا نشتغل Offline بالكامل بلا اشتراكات إجبارية — سيادة كاملة على البيانات. التفاصيل الدقيقة (الحصص والتقييم) نناقشها وياك مباشرة، وأبشر بالترحاب."+C},
       {k:["بصيره","بصيرة","امن","سيبراني","اختراق","حمايه","خصوصيه","ساندبوكس","sandbox","honeypot","مصيده","عزل","offline","اوفلاين"],
        a:"بصيرة (Basseera AI) هي منصة السيادة الرقمية 🔒 نظام أمان يشتغل محلياً بالكامل (Offline)، فلا تطلع بياناتك من جهازك أبداً — خصوصية حقيقية بلا سحابة.\nتشمل: بصيرة السيبرانية للكشف عن التهديدات، تقنية العزل (Sandbox) لفحص الملفات المشبوهة ببيئة معزولة، والمصيدة الذكية (Honeypot) اللي تستدرج المهاجم وترصد سلوكه.\nالمستودع: github.com/ja4apk/basseera.app"},
       {k:["عطر","عطور","انف","خلط","esp32","وصفه","وصفات","رائحه","ريحه","شم","قلعه الملوك","perfume"],
