@@ -77,6 +77,21 @@
      backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);
      box-shadow:0 24px 60px -30px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.08)}
 
+  /* ---------- top nav ---------- */
+  .topnav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:10px;
+     padding:10px 16px;background:rgba(10,14,23,.74);backdrop-filter:blur(16px) saturate(140%);
+     -webkit-backdrop-filter:blur(16px) saturate(140%);border-bottom:1px solid var(--stroke)}
+  .topnav .nb{font-family:var(--font-heritage);font-size:1.2rem;font-weight:700;flex:none;
+     background:linear-gradient(120deg,var(--gold-soft),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .navlinks{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin-inline-start:auto;-webkit-overflow-scrolling:touch}
+  .navlinks::-webkit-scrollbar{display:none}
+  .navlinks a{flex:none;text-decoration:none;color:var(--muted);font-size:.9rem;font-weight:500;
+     padding:7px 12px;border-radius:10px;white-space:nowrap;transition:color .2s,background .2s}
+  .navlinks a:hover{color:var(--gold-soft);background:var(--glass)}
+  .navlinks a.invest{color:var(--gold);font-weight:700}
+  section,.foot{scroll-margin-top:70px}
+  @media (max-width:640px){.topnav .nb{font-size:1rem}.navlinks a{font-size:.84rem;padding:6px 9px}}
+
   /* ---------- hero ---------- */
   .hero{padding-top:clamp(40px,8vw,72px);padding-bottom:clamp(30px,5vw,56px);text-align:center}
   .brandmark{display:inline-flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:26px}
@@ -274,6 +289,21 @@
   <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
 </div>
 <canvas id="stars" aria-hidden="true"></canvas>
+
+<nav class="topnav">
+  <span class="nb">Gentle</span>
+  <div class="navlinks">
+    <a href="#basseera">بصيرة</a>
+    <a href="#invest" class="invest">💰 الاستثمار</a>
+    <a href="#perfumes">العطور</a>
+    <a href="#souls">الأرواح الرقمية</a>
+    <a href="#asrar">أسرار</a>
+    <a href="#apps">التطبيقات</a>
+    <a href="#hardware">العتاد</a>
+    <a href="#lifestyle">المغامر</a>
+    <a href="#contact">تواصل</a>
+  </div>
+</nav>
 
 <!-- ===================== HERO ===================== -->
 <header class="hero wrap">
@@ -532,7 +562,7 @@
 </main>
 
 <!-- ===================== FOOTER ===================== -->
-<footer class="foot wrap">
+<footer class="foot wrap" id="contact">
   <p class="eyebrow" style="text-align:center">تواصل معنا</p>
   <h2 class="sec-title" style="text-align:center">لنبنِ المستحيل معاً</h2>
   <div class="social">
