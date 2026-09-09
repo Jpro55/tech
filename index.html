@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="مركز القيادة الرقمي لجاسم الحمادي (Gentle) — بصيرة، العطور المبرمجة، والأرواح الرقمية.">
+<meta name="description" content="مركز القيادة الرقمي لجاسم الحمادي (Gentle) — بصيرة، العطور المبرمجة، والأرواح الرقمية، مع مساعد ذكي.">
 <style>
   :root{color-scheme:dark}
   html,body{margin:0}
@@ -189,6 +189,56 @@
   @media (prefers-reduced-motion:reduce){
     .blob{animation:none}
     *{scroll-behavior:auto}
+    .fab{animation:none}
+  }
+
+  /* ---------- AI assistant widget ---------- */
+  .fab{position:fixed;bottom:22px;left:22px;z-index:60;display:flex;align-items:center;gap:10px;
+     border:none;cursor:pointer;padding:12px 18px 12px 14px;border-radius:999px;font-family:var(--font-body);
+     font-weight:700;font-size:.95rem;color:var(--ink);
+     background:linear-gradient(120deg,var(--gold-soft),var(--gold));
+     box-shadow:0 14px 34px -10px rgba(232,193,90,.6),0 0 0 1px rgba(255,255,255,.25);
+     animation:fabpulse 2.8s ease-in-out infinite}
+  .fab .fico{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:1.15rem;
+     background:rgba(10,14,23,.14)}
+  @keyframes fabpulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  .fab:hover{filter:brightness(1.06)}
+  .fab[hidden]{display:none}
+
+  .chat{position:fixed;bottom:22px;left:22px;z-index:61;width:min(380px,calc(100vw - 32px));
+     height:min(560px,calc(100vh - 44px));display:flex;flex-direction:column;overflow:hidden;
+     border-radius:24px;opacity:0;transform:translateY(16px) scale(.98);pointer-events:none;
+     transition:opacity .22s ease,transform .22s ease}
+  .chat.open{opacity:1;transform:none;pointer-events:auto}
+  .chat-head{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--stroke);
+     background:linear-gradient(120deg,rgba(232,193,90,.16),rgba(56,224,212,.12))}
+  .chat-head .av{width:42px;height:42px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:1.35rem;
+     background:radial-gradient(circle at 30% 30%,rgba(56,224,212,.4),rgba(123,108,246,.35));border:1px solid var(--stroke)}
+  .chat-head b{font-family:var(--font-display);font-size:1.05rem;display:block}
+  .chat-head span{font-size:.76rem;color:var(--cyan)}
+  .chat-head .x{margin-inline-start:auto;background:var(--glass-2);border:1px solid var(--stroke);color:var(--text);
+     width:32px;height:32px;border-radius:10px;cursor:pointer;font-size:1.1rem;line-height:1}
+  .msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+  .bub{max-width:85%;padding:11px 15px;border-radius:16px;font-size:.92rem;line-height:1.65;white-space:pre-wrap;word-wrap:break-word}
+  .bub.ai{align-self:flex-start;background:var(--glass-2);border:1px solid var(--stroke);border-bottom-right-radius:5px}
+  .bub.me{align-self:flex-end;background:linear-gradient(120deg,rgba(232,193,90,.9),var(--gold));color:var(--ink);
+     border-bottom-left-radius:5px;font-weight:500}
+  .bub.ai.think{color:var(--muted);font-style:italic}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 8px}
+  .chips button{font-family:var(--font-body);font-size:.8rem;padding:7px 12px;border-radius:999px;cursor:pointer;
+     background:var(--glass);border:1px solid var(--stroke);color:var(--sand);transition:border-color .2s}
+  .chips button:hover{border-color:var(--stroke-strong);color:var(--gold-soft)}
+  .chat-in{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--stroke);background:rgba(10,14,23,.4)}
+  .chat-in input{flex:1;background:var(--glass);border:1px solid var(--stroke);border-radius:12px;
+     padding:11px 14px;color:var(--text);font-family:var(--font-body);font-size:.92rem;outline:none}
+  .chat-in input:focus{border-color:var(--stroke-strong)}
+  .chat-in button{flex:none;width:44px;border:none;border-radius:12px;cursor:pointer;font-size:1.1rem;color:var(--ink);
+     background:linear-gradient(120deg,var(--gold-soft),var(--gold))}
+  .chat-in button:disabled{opacity:.5;cursor:default}
+  .chat-note{font-size:.72rem;color:var(--muted);text-align:center;padding:0 14px 10px}
+  @media (max-width:520px){
+    .chat{bottom:0;left:0;width:100vw;height:100dvh;border-radius:0}
+    .fab{bottom:16px;left:16px}
   }
 </style>
 
@@ -413,6 +463,34 @@
   </p>
 </footer>
 
+<!-- ===================== AI ASSISTANT ===================== -->
+<button class="fab" id="fab" type="button" aria-label="افتح مساعد قلعة الملوك">
+  <span class="fico">🤖</span> اسألني أي شي
+</button>
+
+<section class="chat glass" id="chat" aria-live="polite" aria-label="مساعد قلعة الملوك">
+  <div class="chat-head">
+    <div class="av">👑</div>
+    <div>
+      <b>مساعد قلعة الملوك</b>
+      <span id="chatStatus">جاهز للترحيب فيك</span>
+    </div>
+    <button class="x" id="chatClose" type="button" aria-label="إغلاق">✕</button>
+  </div>
+  <div class="msgs" id="msgs"></div>
+  <div class="chips" id="chips">
+    <button type="button">شنو هي بصيرة؟</button>
+    <button type="button">💰 الفرصة الاستثمارية</button>
+    <button type="button">العطور المبرمجة</button>
+    <button type="button">كيف أتواصل وياكم؟</button>
+  </div>
+  <form class="chat-in" id="chatForm" autocomplete="off">
+    <input id="chatInput" type="text" placeholder="اكتب سؤالك هني…" aria-label="سؤالك">
+    <button type="submit" id="chatSend" aria-label="إرسال">➤</button>
+  </form>
+  <p class="chat-note" id="chatNote">مدعوم بالذكاء الاصطناعي · الردود على حساب Claude الخاص بالزائر</p>
+</section>
+
 <script>
   /* subtle starfield */
   (function(){
@@ -445,6 +523,169 @@
         el.style.transform='perspective(800px) rotateX('+(-py*7)+'deg) rotateY('+(px*7)+'deg) translateY(-4px)';
       });
       el.addEventListener('pointerleave',function(){el.style.transform='';});
+    });
+  })();
+
+  /* ---------- مساعد قلعة الملوك (AI assistant + investor ambassador) ---------- */
+  (function(){
+    var fab=document.getElementById('fab'),chat=document.getElementById('chat'),
+        msgs=document.getElementById('msgs'),form=document.getElementById('chatForm'),
+        input=document.getElementById('chatInput'),send=document.getElementById('chatSend'),
+        closeb=document.getElementById('chatClose'),status=document.getElementById('chatStatus'),
+        note=document.getElementById('chatNote'),chips=document.getElementById('chips');
+
+    var WELCOME="هلا والله وغلا فيك! 👋 أنا مساعد قلعة الملوك، سفير مشروع جاسم الحمادي (Gentle). أعرف كل شي عن أعماله — بصيرة للأمن الرقمي، العطور المبرمجة، الأرواح الرقمية، وأكثر. وإذا كنت مستثمر أو تبي تشاركنا المشروع، أرحّب فيك وأشرح لك الفرصة. تفضّل، شخبارك؟";
+
+    /* ---- knowledge base for the LIVE Claude path (leading user turn) ---- */
+    var RULES=[
+      "أنت «مساعد قلعة الملوك»، المساعد الذكي وسفير مشروع المبتكر الإماراتي جاسم عبدالله الحمادي (Gentle). مهمتك: ترحّب بالزوار، تجاوب على أسئلتهم عن جاسم وأعماله، وتُقنع المستثمرين والشركاء المحتملين بالانضمام لمشروع بصيرة وتنمية المنظومة.",
+      "",
+      "قواعد الرد:",
+      "- تكلّم بلهجة إماراتية دافئة ومهنية (حيّاك الله، شحالك، عساك طيّب، أبشر، على راسي، وايد).",
+      "- خلك مختصر ومقنع: من سطرين إلى خمسة أسطر ما لم يُطلب تفصيل.",
+      "- لا تختلق أرقاماً أو وعوداً مالية. إذا سُئلت عن تفاصيل مالية دقيقة (تقييم، حصص، عوائد) قل إنها تُناقَش مباشرة مع جاسم واقترح التواصل: واتساب +971544242369 أو إنستغرام kingscastle369@.",
+      "- مع المستثمر: أبرز المشكلة (الخصوصية والأمن الرقمي)، وحل بصيرة (أمان محلي Offline بالكامل)، والتميّز (العزل Sandbox + المصيدة الذكية Honeypot)، واتساع المنظومة (عطور، نماذج ذكاء، تطبيقات، مختبر تدريب محلي)، وادعُه للتواصل.",
+      "- رحّب فقط في أول رسالة ثم ادخل بالموضوع.",
+      "",
+      "من هو جاسم: مبتكر إماراتي شامل، خبرة +20 سنة، يجمع بين البرمجة وهندسة العطور والطيران والغوص. شعاره: «لا مستحيل أمام المستحيل.. نواكب عصراً أسرع من السرعة». علامته: Gentle / قلعة الملوك.",
+      "",
+      "المشاريع:",
+      "1) بصيرة (Basseera AI) — السيادة الرقمية: منصة أمان سيبراني v2.0 تعمل محلياً بالكامل (Offline) فلا تغادر البيانات جهاز المستخدم. تشمل بصيرة السيبرانية، تقنية العزل (Sandbox)، والمصيدة الذكية (Honeypot). github.com/ja4apk/basseera.app",
+      "2) العطور المبرمجة (قلعة الملوك): الأنف الإلكتروني المبرمج على خوارزميات الشم، جهاز خلط عطور تلقائي (ESP32)، ومولّد وصفات ذكي. jaa-sop.blogspot.com",
+      "3) الأرواح الرقمية: سارة (دعم نفسي)، وليف (مساعد متطور)، النوخذة (تراث وفكاهة)، نبيه (تحضير ذكي).",
+      "4) أسرار (Asrar): موسيقى بلمسة ذكاء اصطناعي مع تدقيق لغوي، على Spotify.",
+      "5) j4apk: تطبيقات أندرويد (راديو القرآن، العملات، وغيرها) على Google Play.",
+      "6) العتاد: كرت RTX 5070 Ti لتدريب النماذج محلياً (ACE-STEP و ComfyUI) وتحسين النطق العربي.",
+      "7) المغامر الشامل: رخص طيار شراعي، طيار درون، غواص لحام تحت الماء، قفز مظلي.",
+      "",
+      "لماذا الاستثمار في بصيرة: الطلب على الخصوصية والأمن السيبراني في تصاعد، وميزة بصيرة إنها تعمل بلا سحابة (خصوصية مطلقة وسيادة كاملة على البيانات) — وهذا مطلب حسّاس للأفراد والجهات الحكومية والشركات في المنطقة. المنظومة متنوّعة (أمن + عطور تقنية + نماذج عربية + تطبيقات) مع مختبر تدريب محلي جاهز، وقائد بخبرة 20 سنة متعددة المجالات.",
+      "العائد المتوقّع: حسب دراسة الجدوى الخاصة بالمشروع، العائد المتوقّع يصل إلى 145% على مدى خمس سنوات. اذكر هذا الرقم دائماً منسوباً إلى «دراسة الجدوى»، ولا تخترع أرقاماً أخرى (حصص، تقييم، جداول) — إن طُلبت، وجّه للتواصل المباشر مع جاسم.",
+      "التواصل: واتساب +971544242369 · إنستغرام kingscastle369@"
+    ].join("\n");
+
+    /* ---- rule-based engine (works for EVERYONE, no account needed) ---- */
+    function norm(s){return (s||'').toLowerCase()
+      .replace(/[ً-ْٰ]/g,'')
+      .replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').replace(/ؤ/g,'و').replace(/ئ/g,'ي');}
+    var C="\n\n📞 للتفاصيل تواصل مع جاسم مباشرة: واتساب +971544242369 · إنستغرام kingscastle369@";
+    var INTENTS=[
+      {k:["استثمار","مستثمر","شراكه","شريك","ممول","تمويل","نستثمر","اشارك","نكبر","فرصه","حصه","راس مال","ادخل معكم","ادخل وياكم","invest"],
+       a:"يا هلا فيك ومرحباً بك شريكاً 🤝 فرصة بصيرة قوية: الطلب على الأمن السيبراني والخصوصية في تصاعد، وميزتنا إننا نشتغل محلياً بالكامل (Offline) — يعني خصوصية مطلقة وسيادة كاملة على البيانات، وهذا مطلب حسّاس للأفراد والجهات الحكومية والشركات بالمنطقة.\n💰 وحسب دراسة الجدوى، العائد المتوقّع من المشروع يصل إلى 145% على مدى 5 سنوات.\nوما نكتفي ببصيرة: عندنا منظومة كاملة (عطور مبرمجة، نماذج ذكاء عربية، تطبيقات، ومختبر تدريب محلي جاهز)، بقيادة مبتكر خبرته +20 سنة بأربع مجالات.\nتفاصيل الأرقام والحصص نناقشها وياك مباشرة، وأبشر بالترحاب."+C},
+      {k:["بصيره","بصيرة","امن","سيبراني","اختراق","حمايه","خصوصيه","ساندبوكس","sandbox","honeypot","مصيده","عزل","offline","اوفلاين"],
+       a:"بصيرة (Basseera AI) هي منصة السيادة الرقمية 🔒 نظام أمان يشتغل محلياً بالكامل (Offline)، فلا تطلع بياناتك من جهازك أبداً — خصوصية حقيقية بلا سحابة.\nتشمل: بصيرة السيبرانية للكشف عن التهديدات، تقنية العزل (Sandbox) لفحص الملفات المشبوهة ببيئة معزولة، والمصيدة الذكية (Honeypot) اللي تستدرج المهاجم وترصد سلوكه.\nالمستودع: github.com/ja4apk/basseera.app"},
+      {k:["عطر","عطور","انف","خلط","esp32","وصفه","وصفات","رائحه","ريحه","شم","قلعه الملوك","perfume"],
+       a:"ركن العطور المبرمجة من قلعة الملوك 🌸 هني نجمع هندسة العطور بالخوارزميات:\n• الأنف الإلكتروني: مستشعر مبرمج على خوارزميات الشم يحلل النفحات رقمياً.\n• جهاز الخلط التلقائي: بمتحكم ESP32 يمزج المكوّنات آلياً بنسب مضبوطة.\n• مولّد الوصفات الذكي: يقترح تركيبات جديدة بالذكاء الاصطناعي.\nالمتجر: jaa-sop.blogspot.com"},
+      {k:["ارواح","روح","ساره","وليف","نوخذه","نبيه","نماذج","شخصيات","دعم نفسي","مساعد"],
+       a:"الأرواح الرقمية هي نماذج ذكاء اصطناعي تفاعلية، كلٍّ له طابعه 🤖\n• سارة: للدعم النفسي، تُنصت وتهدّئ.\n• وليف: مساعد متطوّر واسع القدرات.\n• النوخذة: ذاكرة التراث بروح الفكاهة الأصيلة.\n• نبيه: للتحضير والتنظيم الذكي."},
+      {k:["موسيقى","موسيقا","اسرار","asrar","اغاني","اغنيه","سبوتيفاي","spotify","فن","الحان","تلحين"],
+       a:"«أسرار» (Asrar) هو المشروع الفني 🎵 إنتاجات موسيقية بلمسة الذكاء الاصطناعي مع تدقيق لغوي يحفظ فصاحة الكلمة العربية — تقنية حديثة بذائقة أصيلة. تلقاها على Spotify."},
+      {k:["تطبيق","تطبيقات","اندرويد","j4apk","جوجل بلاي","google play","راديو","قران","قرآن","عملات","برنامج"],
+       a:"تطبيقات j4apk 📱 حزمة أندرويد متنوّعة تخدم المستخدم العربي: راديو القرآن، متابعة العملات، وغيرها الكثير — والقائمة تكبر. تلقاها على Google Play (المطوّر j4apk)."},
+      {k:["كرت","rtx","5070","عتاد","تدريب","gpu","comfyui","ace","نطق","هاردوير","معالج"],
+       a:"مختبر التدريب المحلي ⚡ نشتغل بكرت RTX 5070 Ti لتدريب النماذج محلياً وتشغيل أدوات مثل ACE-STEP و ComfyUI، مع تركيز خاص على تحسين جودة ونطق اللغة العربية — قوة جاهزة تحت أيدينا بلا اعتماد على غيرنا."},
+      {k:["مغامر","طيار","درون","غوص","غواص","قفز","مظلي","شراعي","رخص","هوايه","هوايات","لحام"],
+       a:"جاسم مغامر شامل 🪂 وعنده رخص احترافية موثّقة: طيار شراعي، طيار درون، غواص لحام تحت الماء، وقفز مظلي — نفس روح الإبداع في التقنية، تلقاها في مغامراته."},
+      {k:["مين","من هو","من انت","جاسم","gentle","نبذه","خبره","تعريف","شنو تسوي","وش تسوي"],
+       a:"جاسم عبدالله الحمادي (Gentle) 👑 مبتكر إماراتي شامل، خبرة تتجاوز 20 سنة، يجمع بين البرمجة وهندسة العطور والطيران والغوص. شعاره: «لا مستحيل أمام المستحيل.. نواكب عصراً أسرع من السرعة». يقود منظومة قلعة الملوك الرقمية."},
+      {k:["تواصل","واتساب","رقم","تلفون","انستقرام","انستغرام","instagram","اتصل","كلمني","ايميل","تواصلكم"],
+       a:"أبشر، تواصل مع جاسم مباشرة 🌟\n• واتساب: +971544242369\n• إنستغرام: kingscastle369@\nيسعدنا نسمع منك!"},
+      {k:["شكرا","مشكور","يعطيك العافيه","تسلم","ماقصرت","ما قصرت"],
+       a:"العفو، هذا واجبنا وزيادة 🌹 إذا عندك أي سؤال ثاني عن جاسم أو مشروع بصيرة أنا في الخدمة."},
+      {k:["هلا","مرحبا","السلام","شحال","هاي","hello","hi","صباح","مساء","اهلا"],
+       a:"هلا والله! 👋 نوّرت. اسألني عن أي شي — بصيرة للأمن الرقمي، العطور المبرمجة، الأرواح الرقمية، أو فرصة الاستثمار والشراكة معنا."}
+    ];
+    function ruleAnswer(text){
+      var t=norm(text);
+      for(var i=0;i<INTENTS.length;i++){
+        var ks=INTENTS[i].k;
+        for(var j=0;j<ks.length;j++){ if(t.indexOf(norm(ks[j]))!==-1) return INTENTS[i].a; }
+      }
+      return "سؤال حلو 🌙 أقدر أساعدك بكل شي عن جاسم الحمادي ومشاريعه: بصيرة (الأمن الرقمي)، العطور المبرمجة، الأرواح الرقمية، أسرار للموسيقى، تطبيقات j4apk، والعتاد — وكذلك فرصة الاستثمار والشراكة. عن أي وحدة تحب أخبّرك؟"+C;
+    }
+
+    var samplePromise=null, opened=false, welcomed=false, busy=false, ctl=null;
+    var turns=[]; /* {role,content} for the live path */
+
+    function bubble(cls,text){
+      var b=document.createElement('div');b.className='bub '+cls;b.textContent=text;
+      msgs.appendChild(b);msgs.scrollTop=msgs.scrollHeight;return b;
+    }
+    function openChat(){
+      chat.classList.add('open');fab.hidden=true;opened=true;
+      if(!welcomed){welcomed=true;bubble('ai',WELCOME);}
+      setTimeout(function(){input.focus();},260);
+    }
+    function closeChat(){chat.classList.remove('open');fab.hidden=false;}
+
+    fab.addEventListener('click',openChat);
+    closeb.addEventListener('click',closeChat);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&opened)closeChat();});
+
+    function getSample(){
+      if(samplePromise)return samplePromise;
+      samplePromise=(window.claude&&window.claude.use)?window.claude.use('sample').catch(function(){return null;})
+                    :Promise.resolve(null);
+      return samplePromise;
+    }
+
+    var ERR={
+      rate_limited:"الأسئلة وايد بسرعة 😅 عطني دقيقة وجرّب مرة ثانية.",
+      refused:"خلّني أجاوبك بطريقة ثانية — اسألني عن جاسم أو مشروع بصيرة.",
+      _default:null /* fall back to rule engine */
+    };
+
+    async function ask(text){
+      if(busy||!text.trim())return;
+      bubble('me',text);
+      var sample=await getSample();
+
+      /* --- rule-based path (public / no Claude): instant --- */
+      if(!sample){ bubble('ai',ruleAnswer(text)); input.focus(); return; }
+
+      /* --- live Claude path (when available) --- */
+      turns.push({role:'user',content:text});
+      busy=true;send.disabled=true;input.disabled=true;status.textContent="يكتب…";
+      var think=bubble('ai think','يفكّر…');
+      ctl=new AbortController();
+      var streamed=false;
+      try{
+        var res=await sample([{role:'user',content:RULES}].concat(turns),{
+          modelTier:'quick',cache:false,signal:ctl.signal,
+          onText:function(u){streamed=true;think.classList.remove('think');think.textContent=u.text;
+            msgs.scrollTop=msgs.scrollHeight;}
+        });
+        think.classList.remove('think');think.textContent=res.text;
+        turns.push({role:'assistant',content:res.text});
+        if(res.truncated)bubble('ai',"…(اختصرت الجواب، اسألني عن جزء محدد وأفصّل لك)");
+      }catch(e){
+        var code=e&&e.code;
+        if(code==='cancelled'){ if(!streamed)think.remove(); }
+        else if(streamed&&e.text){ think.textContent=e.text; }
+        else {
+          /* graceful: use the built-in answer instead of an error */
+          think.classList.remove('think');
+          think.textContent=(ERR[code]!==undefined&&ERR[code]!==null)?ERR[code]:ruleAnswer(text);
+        }
+        if(!streamed)turns.pop();
+      }finally{
+        busy=false;send.disabled=false;input.disabled=false;status.textContent="جاهز";
+        input.focus();
+      }
+    }
+
+    form.addEventListener('submit',function(e){
+      e.preventDefault();var v=input.value;input.value='';ask(v);
+    });
+    chips.addEventListener('click',function(e){
+      var b=e.target.closest('button');if(!b)return;
+      if(!opened)openChat();
+      ask(b.textContent);
+    });
+
+    /* status line reflects which brain is active */
+    getSample().then(function(s){
+      if(s){ status.textContent="ذكاء اصطناعي حيّ · جاهز"; note.textContent="مدعوم بالذكاء الاصطناعي الحيّ (Claude) · على حساب الزائر"; }
+      else { status.textContent="جاهز للترحيب فيك"; note.textContent="مساعد قلعة الملوك · يجاوب على كل أسئلتك"; }
     });
   })();
 </script>
